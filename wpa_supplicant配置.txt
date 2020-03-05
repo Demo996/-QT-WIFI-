@@ -1,0 +1,12 @@
+利于串口调试工具进入根文件系统，在/etc 下建b1_wpa_supplicant.conf
+在文件/etc/b1_wpa_supplicant.conf中写入“ctrl_interface=/var/run/wpa_supplicant
+”，在/opt 下建wpa_supplicant.conf,通过WIFI扫描会将连接WIFI所需要的信息全部写进/opt/wpa_supplicant.conf
+,例如：
+ctrl_interface=/var/run/wpa_supplicant
+
+ap_scan=1
+update_config=1
+network={
+        ssid="FD-39"
+        psk="00000000"
+}
