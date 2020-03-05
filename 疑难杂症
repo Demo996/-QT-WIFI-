@@ -1,0 +1,27 @@
+一、WIFI扫描过程中出现的问题
+1.点击扫描WIFI按键之后，终端上出现下面
+错误：“Failed to connect to non-global ctrl_ifname: wlan0  error: Connection refused”
+原因：极大地可能是wpa_supplicant.conf配置文件没有执行，可以通过ps -e 来查看后台进程
+解决：wpa_supplicant -Dwext -iwlan0 -c/etc/wpa_supplicant.conf &
+      wpa_supplicant -B -Dwext -iwlan0 -c/etc/wpa_supplicant.conf 
+	  这两种写法都可以后台运行wpa_supplicant.conf配置
+	  如果已经存在了此进程，则可以用wpa_cli_i wlan0来配置，发现不会出现“Could not connect to wpa_supplicant - re-trying" 的错误信息，
+	  表示已经解决。
+2.错误：insmod: can't insert '/home/driver/8188eu.ko': File exists
+        ifconfig: SIOCGIFFLAGS: No such device
+        uccessfully initialized wpa_supplicant
+        Could not read interface wlan0 flags: No such device
+        WEXT: Could not set interface 'wlan0' UP
+        wlan0: Failed to initialize driver interface
+  原因：(1)可能是无线网卡没有插好，建议拔掉重插，在进行操作
+        (2)可能是wlan0没有打开，在代码中合适的地方执行ifconfig wlan0 up
+
+3.扫描成功后的WIFI信息全部保存在文本里，当打开文本时发现有点WIFI名(ESSID)是空的
+原因：无线路由勾选了隐藏ESSID的选项
+解决：目前技术有限无法提供方法。ESSID很关键，如果被隐藏了，也不是不能连接，而是需要破解，用到其他工具
+，非常麻烦，可以网上自行搜索方法。
+
+二、wifi 连接过程中出现的问题
+1.错误；Failed to connect to non-global ctrl_ifname: wlan0  error: No such file or directory
+  原因：表示必须让wpa_supplicant运行在后台
+  解决：办法同上
